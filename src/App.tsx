@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [loaded, setLoaded] = useState<string>('');
   useEffect(() => {
-    fetch("http://localhost:55667/api/brewery")
+    fetch("https://andculture-interview-api.herokuapp.com/api/brewery")
     .then(response => response.json())
     .then(response => setBreweriesList(response))
     .then(response => setLoaded('loaded'))
