@@ -1,4 +1,4 @@
-export interface BreweryDataItem {
+export interface IBreweryDataItem {
     id: number;
     name: string;
     breweryType: string;
@@ -13,6 +13,6 @@ export interface BreweryDataItem {
     websiteUrl: string;
 }
 
-export interface BreweryDataList {
-    breweries: BreweryDataItem[];
+export interface IBreweryDataList {
+    breweries: IBreweryDataItem[];
 }

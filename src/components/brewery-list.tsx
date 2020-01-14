@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {BreweryDataList} from '../Types/BreweryData';
+import {IBreweryDataList} from '../Types/BreweryData';
 import {Link, RouteComponentProps} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,13 +18,13 @@ const useStyles = makeStyles({
 })
 
 interface BreweryListProps extends RouteComponentProps {
-    breweries: BreweryDataList
+    breweries: IBreweryDataList
 }
 
 export const BreweryList: React.FC<BreweryListProps> = (match) => {
 
 
-    const [breweryList, setBreweryList] = useState<BreweryDataList>();
+    const [breweryList, setBreweryList] = useState<IBreweryDataList>();
     const classes = useStyles();
     return (
         

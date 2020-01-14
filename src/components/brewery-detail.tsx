@@ -1,22 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import GoogleMapReact from 'google-map-react';
-import {BreweryDataItem} from '../Types/BreweryData';
+import {IBreweryDataItem} from '../Types/BreweryData';
 import {Link, RouteComponentProps, useParams, useLocation } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-// interface BreweryDetailProps extends RouteComponentProps<Brew> {
-//     id: string,
-//     brewery: BreweryDataItem
-// }
+
 type BreweryDetailProps = {
         id: string,
-     brewery: BreweryDataItem
+     brewery: IBreweryDataItem
 }
 export const BreweryDetail: React.FC = (match) => {
 
     const location = useLocation();
-
-    console.log(location);
     type mapProps = {
         center: {
             lat: number,
