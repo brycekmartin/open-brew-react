@@ -13,6 +13,8 @@ export interface IBreweryDataItem {
     websiteUrl: string;
 }
 
+
 export interface IBreweryDataList {
     breweries: IBreweryDataItem[];
 }
+

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {IBreweryDataList} from '../Types/BreweryData';
 import {Link, RouteComponentProps} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
@@ -10,6 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles({
     table: {
@@ -23,14 +24,46 @@ interface BreweryListProps extends RouteComponentProps {
 
 export const BreweryList: React.FC<BreweryListProps> = (match) => {
 
-
-    const [breweryList, setBreweryList] = useState<IBreweryDataList>();
+  
+    const [brewerySearchedList, setBrewerySearchedList] = useState<IBreweryDataList>({breweries: []});
+    const [searchValue, setSearchValue] = useState<string>('');
     const classes = useStyles();
+
+    
+    const searchTable = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(event.target.value);
+        if(event.target.value !== ''){
+            console.log("searchValue:" + searchValue);
+            let filteredBreweryList = match.breweries.breweries.filter( result =>  result.city.toLocaleLowerCase() === event.target.value.toLocaleLowerCase() );
+
+            console.log(filteredBreweryList);
+            setBrewerySearchedList({breweries: filteredBreweryList});
+      
+        }
+        else{
+            setBrewerySearchedList({breweries: match.breweries.breweries});
+        }
+        //console.log("searchValue: " + event.target.value);
+    };
+
+    // handleSubmit(e: React.FormEvent<HtmlInputElement>) {
+    //     e.preventDefault();
+    // });
+
+    useEffect(() => {
+            setBrewerySearchedList({breweries: match.breweries.breweries});
+    },[match.breweries.breweries]);
+
+
     return (
         
         <Container maxWidth="lg">
             <h2>Breweries</h2>
+            <form noValidate autoComplete="off">
 
+                <TextField id="city-search" placeholder="City Search" onChange={searchTable} type="input" ></TextField>
+             
+            </form>
            <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
@@ -45,7 +78,8 @@ export const BreweryList: React.FC<BreweryListProps> = (match) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {match.breweries.breweries.map(brewery => (
+                    {/* {match.breweries.breweries.map(brewery => ( */}
+                        {brewerySearchedList.breweries.map(brewery => (
                         <TableRow key={brewery.id}>
                             <TableCell><Link to={{pathname:`/brewery/${brewery.id}`, state: brewery}}>{brewery.name}</Link></TableCell>
                             <TableCell>{brewery.breweryType}</TableCell>

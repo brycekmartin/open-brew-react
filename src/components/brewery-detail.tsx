@@ -1,17 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import GoogleMapReact from 'google-map-react';
 import {IBreweryDataItem} from '../Types/BreweryData';
-import {Link, RouteComponentProps, useParams, useLocation } from 'react-router-dom';
+import {Link, useParams, useLocation } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-type BreweryDetailProps = {
-        id: string,
-     brewery: IBreweryDataItem
-}
 export const BreweryDetail: React.FC = (match) => {
 
     const location = useLocation();
+    // const MapMarker = (text: string) => (<div style={{
+    //     color: 'white',
+    //     background: 'grey',
+    //     padding: '15px 10px',
+    //     display: 'inline-flex',
+    //     textAlign: 'center',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     borderRadius: '100%',
+    //     transform: 'translate(-50%, -50%)'
+    // }}>
+    //     {text}
+    // </div>)
     type mapProps = {
         center: {
             lat: number,
@@ -31,19 +40,14 @@ export const BreweryDetail: React.FC = (match) => {
     const [map, setMap] = useState<mapProps>({center: {lat: location.state.latitude,lng:location.state.longitude},zoom: 11});
     const [defaultMap, setDefaultMap] = useState<mapProps>({center: {lat: 40.263647,lng:-76.889771},zoom: 16});
     const [brewery, setBrewery] = useState<breweryDetail>();
-
+    const [lat, setLat] = useState<number>(0);
+    const [lng, setLng] = useState<number>(0);
+    const [name, setName] = useState<string>('');
     // useEffect(() => {
-    //     setMap({center: {lat: location.state.latitude, lng:location.state.longitude},zoom: 11});
-    //     setBrewery({
-    //         name: match.brewery.name,
-    //         street: match.brewery.street,
-    //         city: match.brewery.city,
-    //         state: match.brewery.state,
-    //         postalCode: match.brewery.postalCode,
-    //         latitude: match.brewery.latitude,
-    //         longitude: match.brewery.longitude
-    //     });
-    // });
+    //     setLat(location.state.latitude);
+    //     setLng(location.state.longitude);
+    //     setName(location.state.name);
+    // },[location.state]);
 
     let {breweryId} = useParams();
     
@@ -61,10 +65,13 @@ export const BreweryDetail: React.FC = (match) => {
                     bootstrapURLKeys={{key: 'AIzaSyD_KNm1DYNdbGfQNEMn0QX1Yd04x9L1yzA'}}
                     defaultCenter={map.center}
                     defaultZoom ={defaultMap.zoom}
+                    yesIWantToUseGoogleMapApiInternals
+                    
                 >
+
                 </GoogleMapReact>
             </div>
-            <Button variant="contained" color="secondary"><Link to={`/${""}`}>Back</Link></Button>
+            <Button variant="contained" color="default"><Link to={`/${""}`}>Back</Link></Button>
         </Container>
 
     )
